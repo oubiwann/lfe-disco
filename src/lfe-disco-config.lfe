@@ -1,5 +1,4 @@
 (defmodule lfe-disco-config
   (export all))
 
-(defun run ()
-    (quote noop))
+(defun max-message-length () (* 100 1024 1024))

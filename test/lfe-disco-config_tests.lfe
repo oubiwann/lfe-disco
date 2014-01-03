@@ -14,5 +14,5 @@
       (assert-throw 2)
       (assert-exit 2))))
 
-(defun noop_test ()
-  (assert-equal 2 2))
+(defun max-message-length_test ()
+  (assert-equal 104857600 (: lfe-disco-config max-message-length)))
