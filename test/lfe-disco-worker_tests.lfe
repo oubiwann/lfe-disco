@@ -14,5 +14,6 @@
       (assert-throw 2)
       (assert-exit 2))))
 
+
 (defun version_test ()
   (assert-equal '"1.1" `(: lfe-disco-worker version)))
