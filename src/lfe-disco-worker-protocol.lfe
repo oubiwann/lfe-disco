@@ -40,11 +40,11 @@
 (defun check-message-length (buffer length-str type)
   "Once the data and the message length have been extracted, do some checks.
   If everything works out, continue parsing."
-  (let ((len (list_to_integer (binary_to_list length-str))))
+  (let ((len (: lfe-disco-util bin->int length-str)))
     (try
       (cond
         ((< len 0)
-          (tuple 'error 'invalid-length))
+          (tuple 'error 'subzero-length))
         ((> len (: lfe-disco-config max-message-length))
           (tuple 'error 'message-too-large))
         ('true
@@ -56,4 +56,4 @@
             )))
       (catch
         ((tuple _ _ _)
-          (tuple 'error 'invalid-length))))))
+          (tuple 'error 'unexpected))))))

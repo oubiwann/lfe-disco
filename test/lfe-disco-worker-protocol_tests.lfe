@@ -46,15 +46,54 @@
 
 (defun parse-message-header_test ()
   (let ((result (: lfe-disco-worker-protocol parse-message-header
-                  '"buffer" (test-ok-data) 'message)))
+                  '"some buffer" (test-ok-data) 'some-message)))
     (assert-equal result 11))
   (let ((result (: lfe-disco-worker-protocol parse-message-header
-                  '"buffer" (test-head-missing-data) 'message)))
+                  '"some buffer" (test-head-missing-data) 'some-message)))
     (assert-equal result #(error invalid-type)))
   (let ((result (: lfe-disco-worker-protocol parse-message-header
-                  '"buffer" (test-more-data) 'message)))
-    (assert-equal result (tuple 'cont '"buffer" 'message))))
+                  '"some buffer" (test-more-data) 'some-message)))
+    (assert-equal result (tuple 'cont '"some buffer" 'some-message))))
 
-; XXX add missing unit test
-(defun check-message-length ()
+(defun check-message-length-errors_test ()
+  (let* ((negative-one (: lfe-disco-util int->bin -1))
+         (result (: lfe-disco-worker-protocol check-message-length
+                  '"some buffer" negative-one 'some-type)))
+    (assert-equal result #(error subzero-length)))
+  (let* ((too-big-len (: lfe-disco-util int->bin
+                        (+ (: lfe-disco-config max-message-length) 1)))
+         (result (: lfe-disco-worker-protocol check-message-length
+                  '"some buffer" too-big-len 'some-type)))
+    (assert-equal result #(error message-too-large)))
+  ; in this last one, we create a pattern that isn't matched in the func's cond
+  ; in order to induce the (catch ...)
+  (let* ((len (: lfe-disco-util int->bin 10))
+         (result (: lfe-disco-worker-protocol check-message-length
+                  '"some buffer" len '"non-binary type data")))
+    (assert-equal result #(error unexpected)))
+  )
+
+(defun check-message-length-success_test ()
+  ; make sure a length of zero works
+  (let* ((len (: lfe-disco-util int->bin 0))
+         (result (: lfe-disco-worker-protocol check-message-length
+                  '"some buffer" len (list_to_binary '"some type"))))
+    (assert-equal
+      result
+      (tuple 'parse-body (binary "some type") (binary "0") 13)))
+  ; make sure large message lengths work
+  (let* ((big-len (: lfe-disco-util int->bin
+                    (- (: lfe-disco-config max-message-length) 1)))
+         (result (: lfe-disco-worker-protocol check-message-length
+                  '"some buffer" big-len (list_to_binary '"some type"))))
+    (assert-equal
+      result
+      (tuple 'parse-body (binary "some type") (binary "104857599") 104857620)))
+  (let* ((big-len (: lfe-disco-util int->bin
+                    (: lfe-disco-config max-message-length)))
+         (result (: lfe-disco-worker-protocol check-message-length
+                  '"some buffer" big-len (list_to_binary '"some type"))))
+    (assert-equal
+      result
+      (tuple 'parse-body (binary "some type") (binary "104857600") 104857621)))
   )
