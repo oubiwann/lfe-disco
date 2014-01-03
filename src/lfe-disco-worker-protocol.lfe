@@ -1,6 +1,21 @@
 (defmodule lfe-disco-worker-protocol
   (export all))
 
+
+(defun create-message (command-name)
+  (create-message command-name '"\"\""))
+
+(defun create-message (command-name payload)
+  (++ command-name
+      '" "
+      (integer_to_list (byte_size (: erlang list_to_binary payload)))
+      '" "
+      payload
+      '"\n"))
+
+(defun ping-cmd ()
+  (create-message '"PING"))
+
 (defun parse (buffer)
   (parse buffer 'new-message))
 
@@ -10,9 +25,9 @@
   ((buffer (= (tuple 'parse-length type) state))
     ; XXX call parse-message-header here ...
     (+ 2 3))
-  ; XXX the following needs a guard for when the byte_size is less than total
-  ;((buffer (= (tuple 'parse-body type length-str total) state))
-  ;  (+ 3 4))
+  ((buffer (= (tuple 'parse-body type length-str total) state))
+    (when (< (byte_size buffer) total))
+    (+ 3 4))
   ((buffer (tuple 'parse-body type length-str total))
     (+ 4 5)))
 
