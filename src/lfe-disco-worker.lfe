@@ -1,5 +1,5 @@
 (defmodule lfe-disco-worker
   (export all))
 
-(defun run ()
-    (quote noop))
+
+(defun version () '"1.1")
