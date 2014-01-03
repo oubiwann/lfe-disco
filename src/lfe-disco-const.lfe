@@ -1,4 +1,4 @@
-(defmodule lfe-disco-worker-client
+(defmodule lfe-disco-const
   (export all))
 
 (defun run ()

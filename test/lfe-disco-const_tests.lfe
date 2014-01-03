@@ -1,4 +1,4 @@
-(defmodule lfe-disco-worker-client_tests
+(defmodule lfe-disco-const_tests
   (export all)
   (import
     (from lfeunit-util

@@ -1,6 +1,6 @@
-################
-lfe-disco-worker
-################
+#########
+lfe-disco
+#########
 
 
 Introduction
@@ -25,15 +25,15 @@ directory of this project when you run ``make deps``:
 Installation
 ============
 
-To inlcude ``lfe-disco-worker`` in your project, simply update the deps section
+To inlcude ``lfe-disco`` in your project, simply update the deps section
 of your ``rebar.config``:
 
 .. code:: erlang
 
     {deps, [
       {lfe, ".*", {git, "git://github.com/rvirding/lfe.git", "develop"}},
-      {'lfe-disco-worker',
-        ".*", {git, "git://github.com/lfe/lfe-disco-worker.git"}}
+      {'lfe-disco',
+        ".*", {git, "git://github.com/lfe/lfe-disco.git"}}
     ]}
 
 

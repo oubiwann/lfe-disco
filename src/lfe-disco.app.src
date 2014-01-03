@@ -1,8 +1,8 @@
 %% -*- erlang -*-
-{application, 'lfe-disco-worker',
+{application, 'lfe-disco',
  [
   %% A quick description of the application.
-  {description, "LFE worker client for Disco (MapReduce)"},
+  {description, "An LFE client for Disco (MapReduce)"},
 
   %% The version of the application
   {vsn, "0.0.1"},
@@ -10,7 +10,7 @@
   %% All modules used by the application.
   {modules,
    [
-    'lfe-disco-worker'
+    'lfe-disco'
    ]},
 
   %% All of the registered names the application uses. This can be ignored.
