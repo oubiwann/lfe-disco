@@ -16,8 +16,17 @@
 (defun ping ()
   (create-message '"PING"))
 
+(defun error (message)
+  (create-message '"ERROR" message))
+
+(defun fail (message)
+  (create-message '"FAIL" message))
+
 (defun task ()
   (create-message '"TASK"))
+
+(defun done ()
+  (create-message '"DONE"))
 
 (defun input ()
   (create-message '"INPUT"))
@@ -30,6 +39,11 @@
 
 (defun msg (payload)
   (create-message '"MSG" payload))
+
+(defun output (label location size)
+  (let* ((data (list (list_to_binary label) (list_to_binary location) size))
+         (payload (: lfe-disco-util json-encode 'list data)))
+    (create-message '"OUTPUT" payload)))
 
 (defun worker-announce ()
   (let* ((data (list 'version (: lfe-disco-worker version)

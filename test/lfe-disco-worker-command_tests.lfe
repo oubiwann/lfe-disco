@@ -25,9 +25,21 @@
   (let ((result (: lfe-disco-worker-command ping)))
     (assert-equal result `'"PING 2 \"\"\n")))
 
+(defun error_test ()
+  (let ((result (: lfe-disco-worker-command error '"There was an error!")))
+    (assert-equal result `'"ERROR 19 There was an error!\n")))
+
+(defun fail_test ()
+  (let ((result (: lfe-disco-worker-command fail '"There was a failure!")))
+    (assert-equal result `'"FAIL 20 There was a failure!\n")))
+
 (defun task_test ()
   (let ((result (: lfe-disco-worker-command task)))
     (assert-equal result `'"TASK 2 \"\"\n")))
+
+(defun done_test ()
+  (let ((result (: lfe-disco-worker-command done)))
+    (assert-equal result `'"DONE 2 \"\"\n")))
 
 (defun input_test ()
   (let ((result (: lfe-disco-worker-command input)))
@@ -41,6 +53,9 @@
   (let ((result (: lfe-disco-worker-command msg '"hey there!")))
     (assert-equal result `'"MSG 10 hey there!\n")))
 
+(defun output_test ()
+  (let ((result (: lfe-disco-worker-command output '"data" '"/output/path" 1024)))
+    (assert-equal result `'"OUTPUT 28 [\"data\",\"/output/path\",1024]\n")))
 
 (defun worker-announce_test ()
   ; XXX why isn't meck working for this test?!
