@@ -22,8 +22,17 @@
 (defun input ()
   (create-message '"INPUT"))
 
+(defun input-error (input-id replica-locations)
+  "replica-locations is a list of ids of any replications that failed."
+  (let* ((data (list input-id replica-locations))
+         (payload (: lfe-disco-util json-encode 'list data)))
+    (create-message '"INPUT_ERR" payload)))
+
+(defun msg (payload)
+  (create-message '"MSG" payload))
+
 (defun worker-announce ()
   (let* ((data (list 'version (: lfe-disco-worker version)
                      'pid (: lfe-disco-util getpid)))
-         (payload (: lfe-disco-util json-encode data)))
+         (payload (: lfe-disco-util json-encode 'bin-pairs  data)))
   (create-message '"WORKER" payload)))

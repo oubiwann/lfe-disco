@@ -33,6 +33,15 @@
   (let ((result (: lfe-disco-worker-command input)))
     (assert-equal result `'"INPUT 2 \"\"\n")))
 
+(defun input-error_test ()
+  (let ((result (: lfe-disco-worker-command input-error 1 '(2 3 4))))
+    (assert-equal result `'"INPUT_ERR 11 [1,[2,3,4]]\n")))
+
+(defun msg_test ()
+  (let ((result (: lfe-disco-worker-command msg '"hey there!")))
+    (assert-equal result `'"MSG 10 hey there!\n")))
+
+
 (defun worker-announce_test ()
   ; XXX why isn't meck working for this test?!
   ;(: meck new 'lfe-disco-util '(passthrough unstick))
