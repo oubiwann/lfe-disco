@@ -1,6 +1,8 @@
 (defmodule lfe-disco-util
   (export all))
 
+(include-lib "kernel/include/file.hrl")
+
 
 ; XXX move these to lfe-utils
 (defun bin->int (bin-data)
@@ -56,3 +58,6 @@
   Ours, however, can be :-)"
   (: os getpid))
 
+(defun get-file-size (filename)
+  (let (((tuple 'ok file-info) (: file read_file_info '"/etc/passwd")))
+    (file_info-size file-info)))
