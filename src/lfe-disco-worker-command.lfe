@@ -40,6 +40,9 @@
 (defun msg (payload)
   (create-message '"MSG" payload))
 
+(defun output (label location)
+  (output label location (: lfe-disco-util get-file-size location)))
+
 (defun output (label location size)
   (let* ((data (list (list_to_binary label) (list_to_binary location) size))
          (payload (: lfe-disco-util json-encode 'list data)))
