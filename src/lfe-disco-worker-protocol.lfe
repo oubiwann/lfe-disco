@@ -2,20 +2,6 @@
   (export all))
 
 
-(defun create-message (command-name)
-  (create-message command-name '"\"\""))
-
-(defun create-message (command-name payload)
-  (++ command-name
-      '" "
-      (integer_to_list (byte_size (: erlang list_to_binary payload)))
-      '" "
-      payload
-      '"\n"))
-
-(defun ping-cmd ()
-  (create-message '"PING"))
-
 (defun parse (buffer)
   (parse buffer 'new-message))
 

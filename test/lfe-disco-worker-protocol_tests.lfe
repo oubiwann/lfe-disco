@@ -27,14 +27,6 @@
 (defun test-not-done-data ()
   (list 'more-data 1 2 3))
 
-(defun create-message_test ()
-  (let ((result (: lfe-disco-worker-protocol create-message '"PING")))
-    (assert-equal result `'"PING 2 \"\"\n")))
-
-(defun ping-cmd_test ()
-  (let ((result (: lfe-disco-worker-protocol ping-cmd)))
-    (assert-equal result `'"PING 2 \"\"\n")))
-
 (defun parse_1_test ()
   (let ((result (: lfe-disco-worker-protocol parse (test-ok-data))))
     (assert-equal result 5)))
