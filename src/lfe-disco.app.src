@@ -10,7 +10,23 @@
   %% All modules used by the application.
   {modules,
    [
-    'lfe-disco'
+    'lfe-disco',
+    'lfe-disco-config',
+    'lfe-disco-const',
+    'lfe-disco-ddfs',
+    'lfe-disco-error',
+    'lfe-disco-job',
+    'lfe-disco-scheme',
+    'lfe-disco-task',
+    'lfe-disco-util',
+    'lfe-disco-worker',
+    'lfe-disco-worker-command',
+    'lfe-disco-worker-input',
+    'lfe-disco-worker-job',
+    'lfe-disco-worker-output',
+    'lfe-disco-worker-pipeline',
+    'lfe-disco-worker-protocol',
+    'lfe-disco-worker-task'
    ]},
 
   %% All of the registered names the application uses. This can be ignored.
