@@ -43,6 +43,8 @@
     (json-encode 'raw (json-wrap-bin data)))
   (('list data)
     (json-encode 'raw data))
+  (('list-bin data)
+    (json-encode 'raw (: lists map #'list_to_binary/1 data)))
   (('raw data)
     (binary_to_list
       (: jiffy encode data))))

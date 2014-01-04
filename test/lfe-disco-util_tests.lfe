@@ -50,12 +50,20 @@
 (defun json-encode-list_test ()
   (let* ((data '(1 2 3))
          (result (list_to_binary (: lfe-disco-util json-encode 'list data))))
-    (assert-equal '"[1,2,3]" `(binary_to_list ,result))))
+    (assert-equal '"[1,2,3]" `(binary_to_list ,result)))
+  (let* ((data '("A" "B" "C"))
+         (result (list_to_binary (: lfe-disco-util json-encode 'list data))))
+    (assert-equal '"[[65],[66],[67]]" `(binary_to_list ,result))))
 
 (defun json-encode-lists_test ()
   (let* ((data '(1 2 3 (2 3 4 (3 4 5))))
          (result (list_to_binary (: lfe-disco-util json-encode 'list data))))
     (assert-equal '"[1,2,3,[2,3,4,[3,4,5]]]" `(binary_to_list ,result))))
+
+(defun json-encode-list-bin_test ()
+  (let* ((data '("A" "B" "C"))
+         (result (list_to_binary (: lfe-disco-util json-encode 'list-bin data))))
+    (assert-equal '"[\"A\",\"B\",\"C\"]" `(binary_to_list ,result))))
 
 (defun json-encode-raw_test ()
   (let* ((data 1)
