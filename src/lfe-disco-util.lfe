@@ -33,9 +33,19 @@
 
 (defun json-encode (data)
   "Ah, much better."
-  (binary_to_list
-    (: jiffy encode
-      (: lfe-disco-util json-wrap-bin data))))
+  (json-encode 'bin-pairs data))
+
+(defun json-encode
+  "Ah, much better."
+  (('pairs data)
+    (json-encode 'raw (json-wrap data)))
+  (('bin-pairs data)
+    (json-encode 'raw (json-wrap-bin data)))
+  (('list data)
+    (json-encode 'raw data))
+  (('raw data)
+    (binary_to_list
+      (: jiffy encode data))))
 
 (defun getpid ()
   "We define own own here, so that we can unit test it. (: os getpid) is
