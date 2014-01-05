@@ -6,7 +6,7 @@ lfe-disco
 Introduction
 ============
 
-Add content to me here!
+An LFE client library for the `Disco`_ big-data platform.
 
 
 Dependencies
@@ -40,11 +40,12 @@ of your ``rebar.config``:
 Usage
 =====
 
-Add content to me here!
+TBD (project still in-progress; worker protocol will likely be the first bit done)
 
 
 .. Links
 .. -----
+.. _Disco: https://github.com/discoproject
 .. _rebar: https://github.com/rebar/rebar
 .. _LFE: https://github.com/rvirding/lfe
 .. _lfeunit: https://github.com/lfe/lfeunit
