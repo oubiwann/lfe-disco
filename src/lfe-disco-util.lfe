@@ -61,3 +61,27 @@
 (defun get-file-size (filename)
   (let (((tuple 'ok file-info) (: file read_file_info '"/etc/passwd")))
     (file_info-size file-info)))
+
+(defun *->int (data)
+  (cond
+    ((is_integer data)
+      data)
+    ((is_list data)
+      (list_to_integer data))
+    ((is_binary data)
+      (bin->int data))
+    ((is_atom data)
+      (*->int (atom_to_list data)))))
+
+(defun *->list (data)
+  (cond
+    ((is_list data)
+      data)
+    ((is_integer data)
+      (integer_to_list data))
+    ((is_binary data)
+      (binary_to_list data))
+    ((is_atom data)
+      (atom_to_list data))))
+
+

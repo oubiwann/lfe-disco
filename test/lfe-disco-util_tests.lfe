@@ -88,3 +88,16 @@
          (result (list_to_binary (: lfe-disco-util json-encode 'raw data))))
     (assert-equal '"[\"a\",[65],\"b\",[66]]" `(binary_to_list ,result))))
 
+(defun *->int_test ()
+  (assert-equal 1 (: lfe-disco-util *->int 1))
+  (assert-equal 1 (: lfe-disco-util *->int '"1"))
+  (assert-equal 1 (: lfe-disco-util *->int (binary "1")))
+  (assert-equal 1 (: lfe-disco-util *->int '|1|)))
+
+(defun *->list_test ()
+  (assert-equal '"1" `(: lfe-disco-util *->list 1))
+  (assert-equal '"1" `(: lfe-disco-util *->list '"1"))
+  (assert-equal '"1" `(: lfe-disco-util *->list (binary "1")))
+  (assert-equal '"1" `(: lfe-disco-util *->list '|1|)))
+
+
