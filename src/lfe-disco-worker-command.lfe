@@ -49,7 +49,10 @@
     (create-message '"OUTPUT" payload)))
 
 (defun worker-announce ()
+  (worker-announce (: lfe-disco-util getpid)))
+
+(defun worker-announce (pid)
   (let* ((data (list 'version (: lfe-disco-worker version)
-                     'pid (: lfe-disco-util getpid)))
-         (payload (: lfe-disco-util json-encode 'bin-pairs  data)))
+                     'pid (: lfe-disco-util *->list pid)))
+         (payload (: lfe-disco-util json-encode 'bin-pairs data)))
   (create-message '"WORKER" payload)))

@@ -66,7 +66,7 @@
                   '"data" '"/output/path" 1024)))
     (assert-equal result `'"OUTPUT 28 [\"data\",\"/output/path\",1024]\n")))
 
-; XXX this needs to be mocked
+; XXX worker-announce/0 needs to be mocked
 (defun worker-announce_test ()
   ; XXX why isn't meck working for this test?!
   ;(: meck new 'lfe-disco-util '(passthrough unstick))
@@ -87,4 +87,14 @@
     ;(after
       ;(: meck validate 'lfe-disco-util)
       ;(: meck unload 'lfe-disco-util))))
+  (let ((result (list_to_binary
+                  (: lfe-disco-worker-command worker-announce 12345))))
+    (assert-equal
+      '"WORKER 31 {\"version\":\"1.1\",\"pid\":\"12345\"}\n"
+      `(binary_to_list ,result)))
+  (let ((result (list_to_binary
+                  (: lfe-disco-worker-command worker-announce '"12345"))))
+    (assert-equal
+      '"WORKER 31 {\"version\":\"1.1\",\"pid\":\"12345\"}\n"
+      `(binary_to_list ,result)))
   )
